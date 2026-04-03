@@ -79,4 +79,3 @@ MONTHLY,100.00,2024-03-01,2024-09-01
 ## Author
 
 Sumitra Chhetri  
-Built as part of a Cloud Computing Upskilling Cohort application
