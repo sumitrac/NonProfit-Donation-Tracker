@@ -1,71 +1,86 @@
-# Project Plan: FocusFlows
+# 🌱 NonProfit Donation Tracker
 
-## Project Overview
-FocusFlows is a simple task management application where users can create, update, and delete tasks.  
-The project is structured with a frontend (React) and a backend (Node.js/Express or Python) and is designed for easy deployment.
-
----
-
-## Objectives
-- Build a functional task management app.
-- Keep frontend and backend modular.
-- Maintain clear project documentation in GitHub.
-- Deploy frontend and backend separately while keeping repo organized.
+An internal management tool for non-profit staff to record, track, and report on donations. 
+This is not a public donation platform — it is a back-office tool to help organizations understand their donation data.
 
 ---
 
-## Repo Structure
+## What It Does
+
+- Add **one-time** or **monthly recurring** donations manually
+- **Import donations in bulk** via CSV file upload
+- Query **total donations for any given year**
+- Cancel and track monthly donation lifecycles
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | React |
+| **Backend** | Java 21, Spring Boot, Gradle |
+| **Database** | PostgreSQL |
+| **ORM** | Spring Data JPA |
+
+---
+
+## Project Structure
+
 ```
-FocusFlows/
+NonProfit-Donation-Tracker/
 ├── README.md
 ├── project-plan/
-│ └── project-plan.md # This file
-├── docs/ # Diagrams, mockups, notes
-├── frontend/ # React app
-├── backend/ # Node.js/Express or Python API
+│   └── project-plan.md
+├── backend/
+├── frontend/
 └── .gitignore
 ```
 
 ---
 
-## Features
-- **Task CRUD**: Create, Read, Update, Delete tasks.
-- **User-friendly UI**: Clean and responsive.
-- **API integration**: Frontend communicates with backend for data persistence.
-- **Deployment-ready**: Frontend and backend can be deployed separately.
+## Core Domain Model
+
+```
+DonationInterface
+└── BaseDonation (abstract)
+    ├── OneTimeDonation   → counts in the year it was made
+    └── MonthlyDonation   → counts active months × amount per year
+
+NonProfit → calculates total donations for any given year
+```
 
 ---
 
-## Backend
-- **Language**: Node.js (Express) or Python (FastAPI/Flask)  
-- **Database**: SQLite (file-based, simple)  
-- **API Endpoints**:
-  - `GET /tasks` – fetch all tasks
-  - `POST /tasks` – add a task
-  - `PUT /tasks/:id` – update a task
-  - `DELETE /tasks/:id` – delete a task
+## Key API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/donations/total?year={year}` | Get total donations for a year |
+| `POST` | `/api/donations/onetime` | Add a one-time donation |
+| `POST` | `/api/donations/monthly` | Add a monthly donation |
+| `POST` | `/api/donations/import` | Bulk import donations via CSV |
+| `PUT` | `/api/donations/monthly/{id}/cancel` | Cancel a monthly donation |
 
 ---
 
-## Frontend
-- **Framework**: React
-- **Components**:
-  - `TaskList` – displays all tasks
-  - `TaskItem` – individual task with edit/delete
-  - `TaskForm` – add or edit task
-- **API calls**: Axios or fetch
-- **State management**: `useState` & `useEffect`
+## CSV Import Format
+
+```
+type,amount,creationDate,cancellationDate
+ONE_TIME,500.00,2024-01-15,
+MONTHLY,100.00,2024-03-01,2024-09-01
+```
 
 ---
 
-## Deployment
-- **Frontend**: Vercel / Netlify  
-- **Backend**: Render / Railway  
-- Ensure frontend points to live backend URL.
+## Future Improvements
+
+- Payment processor integration (Stripe, PayPal) to auto-import donations
+- Donor management and profiles
+- Dashboard with charts and yearly trends
 
 ---
 
-## Documentation & Notes
-- All project planning files are stored in `project-plan/`.
-- Diagrams, UI mockups, or additional notes go in the `docs/` folder.
-- Keep commits frequent and descriptive.
+## Author
+Sumitra Chhetri  
