@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
+export const s = {
+  overlay: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 },
+  modal: { background: 'white', borderRadius: '16px', padding: '24px', width: '420px' },
+  input: { width: '100%', border: '1px solid #ddd', borderRadius: '8px', padding: '10px', marginBottom: '12px', boxSizing: 'border-box' },
+  saveBtn: { background: '#166534', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer' },
+  cancelBtn: { background: 'white', border: '1px solid #ddd', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', marginRight: '8px' },
+};
+
 const AddDonationModal = ({ onClose, onSave }) => {
   // Stores form input values
   const [type, setType] = useState('ONE_TIME');
@@ -28,52 +36,21 @@ const AddDonationModal = ({ onClose, onSave }) => {
   };
 
   return (
-        <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999}}>
-        <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="font-black text-gray-900">Add Donation</h2>
-            <button onClick={onClose}><X size={18} className="text-gray-400" /></button>
-          </div>
-
-          {/* Donation Type */}
-          <div className="mb-4">
-            <label className="text-xs font-bold text-gray-400 uppercase">Type</label>
-            <select value={type} onChange={e => setType(e.target.value)}
-                    className="w-full mt-1 bg-gray-50 border border-gray-100 rounded-xl p-3 font-bold outline-none">
+      <div style={s.overlay}>
+        <div style={s.modal}>
+            <h2>Add Donation</h2>
+            <select style={s.input} value={type} onChange={e => setType(e.target.value)}>
               <option value="ONE_TIME">One Time</option>
               <option value="MONTHLY">Monthly</option>
             </select>
-          </div>
-
-          {/* Amount */}
-          <div className="mb-4">
-            <label className="text-xs font-bold text-gray-400 uppercase">Amount</label>
-            <input type="number" value={amount} onChange={e => setAmount(e.target.value)}
-                   placeholder="0.00"
-                   className="w-full mt-1 bg-gray-50 border border-gray-100 rounded-xl p-3 font-bold outline-none" />
-          </div>
-
-          {/* Date */}
-          <div className="mb-6">
-            <label className="text-xs font-bold text-gray-400 uppercase">Date</label>
-            <input type="date" value={creationDate} onChange={e => setCreationDate(e.target.value)}
-                   className="w-full mt-1 bg-gray-50 border border-gray-100 rounded-xl p-3 font-bold outline-none" />
-          </div>
-
-          {/* Buttons */}
-          <div className="flex gap-3">
-            <button onClick={onClose}
-                    className="flex-1 bg-gray-50 border border-gray-100 px-4 py-2 rounded-xl text-xs font-bold">
-              Cancel
-            </button>
-            <button onClick={handleSubmit}
-                    className="flex-1 bg-green-800 text-white px-4 py-2 rounded-xl text-xs font-bold">
-              Save Donation
-            </button>
+            <input style={s.input} type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Amount" />
+            <input style={s.input} type="date" value={creationDate} onChange={e => setCreationDate(e.target.value)} />
+            <div>
+              <button style={s.cancelBtn} onClick={onClose}>Cancel</button>
+              <button style={s.saveBtn} onClick={handleSubmit}>Save</button>
+            </div>
           </div>
         </div>
-      </div>
-  );
+    );
 };
-
 export default AddDonationModal;
