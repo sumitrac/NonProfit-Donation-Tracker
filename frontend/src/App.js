@@ -4,6 +4,7 @@ import Header from './components/Header';
 import MetricCard from './components/MetricCard';
 import QueryCard from './components/QueryCard';
 import DonationTable from './components/DonationTable';
+import AddDonationModal from "./components/AddDonationModal";
 
 const API_URL = 'http://localhost:8080/api';
 
@@ -11,6 +12,7 @@ function App() {
   const [year, setYear] = useState(2026);
   const [totalForYear, setTotalForYear] = useState(0);
   const [donations, setDonations] = useState([])
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchDonations();
@@ -34,7 +36,8 @@ function App() {
 
   return (
       <div className="min-h-screen bg-gray-50 p-8 md:p-12 font-sans tracking-tight">
-        <Header />
+        {/*<Header />*/}
+        <Header onAddDonation={() => setShowModal(true)} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 gap-6">
@@ -60,6 +63,7 @@ function App() {
                 })
           }))} />
         </div>
+        {showModal && <AddDonationModal onClose={() => setShowModal(false)} onSave={fetchDonations} />}
       </div>
   );
 }
