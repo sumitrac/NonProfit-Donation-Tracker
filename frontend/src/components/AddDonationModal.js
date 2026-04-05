@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
 
-export const s = {
+export const DonationModalStyles = {
   overlay: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 },
   modal: { background: 'white', borderRadius: '16px', padding: '24px', width: '420px' },
   input: { width: '100%', border: '1px solid #ddd', borderRadius: '8px', padding: '10px', marginBottom: '12px', boxSizing: 'border-box' },
@@ -36,18 +35,18 @@ const AddDonationModal = ({ onClose, onSave }) => {
   };
 
   return (
-      <div style={s.overlay}>
-        <div style={s.modal}>
+      <div style={DonationModalStyles.overlay}>
+        <div style={DonationModalStyles.modal}>
             <h2>Add Donation</h2>
-            <select style={s.input} value={type} onChange={e => setType(e.target.value)}>
+            <select style={DonationModalStyles.input} value={type} onChange={e => setType(e.target.value)}>
               <option value="ONE_TIME">One Time</option>
               <option value="MONTHLY">Monthly</option>
             </select>
-            <input style={s.input} type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Amount" />
-            <input style={s.input} type="date" value={creationDate} onChange={e => setCreationDate(e.target.value)} />
+            <input style={DonationModalStyles.input} type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Amount" />
+            <input style={DonationModalStyles.input} type="date" value={creationDate} onChange={e => setCreationDate(e.target.value)} />
             <div>
-              <button style={s.cancelBtn} onClick={onClose}>Cancel</button>
-              <button style={s.saveBtn} onClick={handleSubmit}>Save</button>
+              <button style={DonationModalStyles.cancelBtn} onClick={onClose}>Cancel</button>
+              <button style={DonationModalStyles.saveBtn} onClick={handleSubmit}>Save</button>
             </div>
           </div>
         </div>
