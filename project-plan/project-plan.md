@@ -82,5 +82,23 @@ MONTHLY,100.00,2024-03-01,2024-09-01
 
 ---
 
-## Author
-Sumitra Chhetri  
+
+## API Examples
+
+Get all donations:
+```bash
+curl http://localhost:8080/api/donations
+```
+
+Add a one-time donation:
+```bash
+curl -X POST http://localhost:8080/api/donations \
+-H "Content-Type: application/json" \
+-d '{"type":"ONE_TIME","amount":500.00,"creationDate":"2024-01-15T00:00:00"}'
+```
+
+Get total donations for a year:
+```bash
+curl http://localhost:8080/api/donations/total?year=2024
+```
+
