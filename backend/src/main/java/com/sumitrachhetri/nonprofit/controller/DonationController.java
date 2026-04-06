@@ -10,7 +10,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/donations")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://donation-tracker-frontend.onrender.com")
 public class DonationController {
 
   private final DonationService donationService;
