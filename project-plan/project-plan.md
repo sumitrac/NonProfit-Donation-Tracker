@@ -1,91 +1,52 @@
-# 🌱 NonProfit Donation Tracker
+# 🌱 NonProfit Donation Tracker: # 📔 Non-Profit-Donation-Tracker:
 
-An internal management tool for non-profit staff to record, track, and report on donations. 
-This is not a public donation platform — it is a back-office tool to help organizations understand their donation data.
+1.  **Phase 1: Core Logic (Plain Java)**
+    * Established the foundation with `DonationInterface` and `BaseDonation` classes.
+    * Developed the logic required to calculate yearly totals for one-time versus monthly recurring donations.
 
----
+2.  **Phase 2: API & Integration**
+    * Transitioned the business logic into a **Spring Boot** application.
+    * Built REST controllers and mapped endpoints to handle incoming donation data via JSON.
 
-## What It Does
+3.  **Phase 3: Database**
+    * Integrated **PostgreSQL** using Spring Data JPA.
+    * Shifted from in-memory storage to a persistent database to ensure all donation records survive application restarts.
 
-- Add **one-time** or **monthly recurring** donations manually
-- **Import donations in bulk** via CSV file upload
-- Query **total donations for any given year**
-- Cancel and track monthly donation lifecycles
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **Frontend** | React |
-| **Backend** | Java 21, Spring Boot, Gradle |
-| **Database** | PostgreSQL |
-| **ORM** | Spring Data JPA |
+4.  **Phase 4: Frontend Development (React)**
+    * Built the user dashboard using **React**.
+    * Leveraged **AI-assisted development** to rapidly scaffold UI components and styled them to interface with the Spring Boot API for real-time data display.
 
 ---
 
-## Project Structure
+## 📅 V2 Roadmap (Future Improvements)
 
-```
-NonProfit-Donation-Tracker/
-├── README.md
-├── project-plan/
-│   └── project-plan.md
-├── backend/
-├── frontend/
-└── .gitignore
-```
+* **CSV Import Engine:** Implement `POST /api/donations/import` to allow non-profits to upload bulk historical data from spreadsheets.
+* **Donation Lifecycle Management:** Add a `PUT /cancel` endpoint to update the `cancellationDate` for active monthly subscriptions, improving the accuracy of yearly projections.
+* **Automated Payment Integration:** Connect **Stripe webhooks** to automatically record live donations and trigger digital receipts.
+* **Data Visualization:** Integrate **Charts.js** or **Recharts** to provide visual trends of donation growth over time.
+* **Donor Management:** Expand the schema to include `DonorProfile` entities for tracking individual giving history.
+
+## ⚙️ Technical Environment
+
+* **Language:** Java 25
+* **Framework:** Spring Boot 3.4 (with Gradle)
+* **Database:** PostgreSQL
+* **Frontend:** React (Hooks & Fetch API)
+* **Cloud Hosting:** Render (configured with dynamic environment variables)
+---
+
+## 🔬 System Design & Logic
+
+### Yearly Calculation Engine
+* **OneTimeDonation:** Full `amount` applied to the year of the `creationDate`.
+* **MonthlyDonation:** Calculated as `(Monthly Amount × Active Months in Year)`.
+    * *Logic:* The system validates the `cancellationDate` against the queried year to ensure accurate reporting for donors who stop their subscriptions mid-year.
 
 ---
 
-## Core Domain Model
+## 🧪 Local Testing & API Snippets
 
-```
-DonationInterface
-└── BaseDonation (abstract)
-    ├── OneTimeDonation   → counts in the year it was made
-    └── MonthlyDonation   → counts active months × amount per year
-
-NonProfit → calculates total donations for any given year
-```
-
----
-
-## Key API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/donations/total?year={year}` | Get total donations for a year |
-| `POST` | `/api/donations/onetime` | Add a one-time donation |
-| `POST` | `/api/donations/monthly` | Add a monthly donation |
-| `POST` | `/api/donations/import` | Bulk import donations via CSV |
-| `PUT` | `/api/donations/monthly/{id}/cancel` | Cancel a monthly donation |
-
----
-
-## CSV Import Format
-
-```
-type,amount,creationDate,cancellationDate
-ONE_TIME,500.00,2024-01-15,
-MONTHLY,100.00,2024-03-01,2024-09-01
-```
-
----
-
-## Future Improvements
-
-- Payment processor integration (Stripe, PayPal) to auto-import donations
-- Donor management and profiles
-- Dashboard with charts and yearly trends
-
----
-
-
-## API Examples
-
-Get all donations:
+**Get all donation records:**
 ```bash
 curl http://localhost:8080/api/donations
 ```

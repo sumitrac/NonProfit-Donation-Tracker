@@ -5,11 +5,13 @@ const metricStyles = {
     backgroundColor: 'white',
     padding: '1.5rem', // p-6
     borderRadius: '1rem', // rounded-2xl
-    boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', // shadow-sm
+    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     border: '1px solid #f3f4f6', // border-gray-100
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginTop: '1rem',
+    marginBottom: '1rem'
   },
   title: {
     fontSize: '0.75rem', // text-xs
@@ -45,7 +47,16 @@ const metricStyles = {
 };
 
 const MetricCard = ({ title, value, subtext, Icon }) => (
-    <div style={metricStyles.card}>
+    <div style={metricStyles.card}
+         onMouseEnter={(e) => {
+           e.currentTarget.style.transform = 'translateY(-5px)';
+           e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+         }}
+         onMouseLeave={(e) => {
+           e.currentTarget.style.transform = 'translateY(0)';
+           e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+         }}
+    >
       <div>
         <p style={metricStyles.title}>{title}</p>
         <h2 style={metricStyles.value}>{value}</h2>
